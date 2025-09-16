@@ -49,7 +49,7 @@
             width: max-content;
             max-width: calc(100vw - 32px);
             height: auto;
-            padding: 36px;
+            padding: 30px;
             background-color: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(12px);
             border-radius: 24px;
@@ -65,6 +65,16 @@
         .button-container {
             display: flex;
             justify-content: flex-end;
+            max-height: 100px;
+            margin-top: 15px;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out, margin-top 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+
+        .button-container.collapsed {
+            max-height: 0;
+            margin-top: 0;
+            opacity: 0;
         }
 
         #greeting {
@@ -73,7 +83,6 @@
         }
 
         input[type="button"] {
-            margin-top: 36px;
             color: white;
             background-color: #0fa7d9;
             border-radius: 24px;
@@ -86,6 +95,18 @@
         input[type="button"]:hover {
             opacity: 0.75;
             cursor: pointer;
+        }
+
+        input[type="button"].fade-out {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+
+        input[type="button"].hidden {
+            opacity: 0;
+            transform: scale(0.8);
+            pointer-events: none;
         }
 
         #footer {
@@ -185,26 +206,49 @@
             <video autoplay controls muted playsinline src="/831.mp4">
                 Your browser does not support the video tag.
             </video>
-            <!-- <div class="button-container">
-                <input id="blog" type="button" value="访问本站" />
-                <input id="redirect" type="button" value=" 是否本来要前往哔哩哔哩？" />
-            </div> -->
+            <div class="button-container">
+                <input id="unmute" type="button" value="解除静音" />
+            </div>
         </div>
         <footer id="footer">
             <script>
-                const main = document.getElementById("main");
-                const img = new Image();
-                img.src = "/miku.webp";
-                const visible = ()=>setTimeout(() => {
-                    document.querySelector(".container").classList.add("visible");
-                }, 500);
-                img.onload = () => {
-                    main.style.backgroundImage = `url(${img.src})`;
-                    visible();
-                };
-                img.onerror = () => {
-                    visible();
-                };
+                document.addEventListener("DOMContentLoaded", () => {
+                    const main = document.getElementById("main");
+                    const img = new Image();
+                    img.src = "/miku.webp";
+                    const visible = ()=>setTimeout(() => {
+                        document.querySelector(".container").classList.add("visible");
+                    }, 500);
+                    img.onload = () => {
+                        main.style.backgroundImage = `url(${img.src})`;
+                        visible();
+                    };
+                    img.onerror = () => {
+                        visible();
+                    };
+                    document.getElementById("unmute").onclick = () => {
+                        const video = document.querySelector("video");
+                        const unmuteBtn = document.getElementById("unmute");
+                        const buttonContainer = document.querySelector(".button-container");
+                        
+                        video.muted = false;
+                        video.play();
+                        
+                        // 第一阶段：按钮淡出动画
+                        unmuteBtn.classList.add("fade-out");
+                        buttonContainer.classList.add("collapsed");
+                        
+                        // 第三阶段：动画完成后真正隐藏（可选，因为collapsed已经完全隐藏了）
+                        setTimeout(() => {
+                            buttonContainer.style.display = "none";
+                        }, 800); // 总动画时间
+                    };
+
+                    const video = document.querySelector("video");
+                    if (!video.muted) {
+                        document.getElementById("unmute").style.display = "none";
+                    }
+                });
             </script>
             <div style="position: fixed; bottom: 12px"><a href="https://www.bilibili.com/video/BV1nx411K7Gu/" target="_blank">Video Source</a>. Site by <a href="https://www.bilibiili.com/" target="_blank">cgluWxh</a>. <a href="https://icp.gov.moe/?keyword=20253039" target="_blank">萌ICP备20253039号</a></div>
         </footer>
