@@ -1,0 +1,194 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #main {
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            background-repeat: no-repeat;
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 114514;
+            background-color: white;
+            padding: 16px;
+            box-sizing: border-box;
+        }
+
+        b {
+            color: crimson;
+        }
+
+        span {
+            font-size: large;
+        }
+
+        .container {
+            margin-top: -24px;
+            opacity: 0;
+            width: max-content;
+            max-width: calc(100vw - 32px);
+            height: auto;
+            padding: 36px;
+            background-color: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            box-shadow: 0 0 48px rgba(0, 0, 0, 0.5);
+            transition: opacity 1s cubic-bezier(0.51, 0.01, 0, 1);
+            box-sizing: border-box;
+        }
+
+        .container.visible {
+            opacity: 1;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        #greeting {
+            font-weight: bold;
+            font-size: xx-large;
+        }
+
+        input[type="button"] {
+            margin-top: 36px;
+            color: white;
+            background-color: #0fa7d9;
+            border-radius: 24px;
+            border: none;
+            padding: 12px;
+            transition: opacity 0.2s ease-in-out;
+            margin-left: 12px;
+        }
+
+        input[type="button"]:hover {
+            opacity: 0.75;
+            cursor: pointer;
+        }
+
+        #footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            mask-image: linear-gradient(to bottom,
+                    rgba(0, 0, 0, 0) 10%,
+                    rgba(0, 0, 0, 1) 90%);
+            -webkit-mask-image: -webkit-linear-gradient(to bottom,
+                    rgba(0, 0, 0, 0) 10%,
+                    rgba(0, 0, 0, 1) 90%);
+            height: 100px;
+            opacity: 1;
+            color: rgba(255, 255, 255, 0.76);
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            font-size: small;
+            padding: 3px;
+            backdrop-filter: blur(12px);
+        }
+
+        a {
+            color:rgba(255, 255, 255, 0.76);
+            text-decoration: none;
+            border-bottom: #0fa7d9 1px dashed;
+            transition: color 0.2s ease-in-out;
+        }
+        a:hover {
+            color: white;
+        }
+
+        video {
+            max-width: 100%;
+            height: auto;
+            border-radius: 24px;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 24px;
+                margin: 16px;
+                max-width: calc(100vw - 32px);
+            }
+            
+            #greeting {
+                font-size: x-large;
+                text-align: center;
+            }
+            
+            video {
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 16px;
+                margin: 12px;
+            }
+            
+            #greeting {
+                font-size: large;
+            }
+        }
+    </style>
+    <title>Aug 31st for Miku ヾ(*´▽‘*)</title>
+</head>
+
+<body>
+    <div id="main">
+        <div class="container">
+            <div id="greeting">Aug 31st for Miku ヾ(*´▽‘*)</div>
+            <br />
+            <video autoplay controls src="/831.mp4">
+                Your browser does not support the video tag.
+            </video>
+            <!-- <div class="button-container">
+                <input id="blog" type="button" value="访问本站" />
+                <input id="redirect" type="button" value=" 是否本来要前往哔哩哔哩？" />
+            </div> -->
+        </div>
+        <footer id="footer">
+            <script>
+                // play when interaction
+                document.body.addEventListener("click", () => {
+                    const video = document.querySelector("video");
+                    if (video.paused || video.muted) {
+                        video.muted = false;
+                        video.play();
+                    }
+                }, { once: true });
+                const main = document.getElementById("main");
+                const img = new Image();
+                img.src = "/miku.webp";
+                const visible = ()=>setTimeout(() => {
+                    document.querySelector(".container").classList.add("visible");
+                }, 500);
+                img.onload = () => {
+                    main.style.backgroundImage = `url(${img.src})`;
+                    visible();
+                };
+                img.onerror = () => {
+                    visible();
+                };
+            </script>
+            <div style="position: fixed; bottom: 12px"><a href="https://www.bilibili.com/video/BV1nx411K7Gu/" target="_blank">Video Source</a>. Site by <a href="https://www.bilibiili.com/" target="_blank">cgluWxh</a>.</div>
+        </footer>
+    </div>
+</body>
+
+</html>
